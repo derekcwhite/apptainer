@@ -150,7 +150,7 @@ func (c *ctx) eclConfig(t *testing.T) {
 			exit: 255,
 		},
 		{
-			name:    "run with whitelist key1 and signed image",
+			name:    "run with allowlist key1 and signed image",
 			command: "exec",
 			profile: e2e.UserProfile,
 			config: &syecl.EclConfig{
@@ -158,7 +158,7 @@ func (c *ctx) eclConfig(t *testing.T) {
 				ExecGroups: []syecl.Execgroup{
 					{
 						TagName:  "group1",
-						ListMode: "whitelist",
+						ListMode: "allowlist",
 						DirPath:  tmpDir,
 						KeyFPs:   []string{KeyMap["key1"]},
 					},
@@ -168,7 +168,7 @@ func (c *ctx) eclConfig(t *testing.T) {
 			exit: 0,
 		},
 		{
-			name:    "run with whitelist key2 and signed image",
+			name:    "run with allowlist key2 and signed image",
 			command: "exec",
 			profile: e2e.UserProfile,
 			config: &syecl.EclConfig{
@@ -176,7 +176,7 @@ func (c *ctx) eclConfig(t *testing.T) {
 				ExecGroups: []syecl.Execgroup{
 					{
 						TagName:  "group1",
-						ListMode: "whitelist",
+						ListMode: "allowlist",
 						DirPath:  tmpDir,
 						KeyFPs:   []string{KeyMap["key2"]},
 					},
@@ -186,7 +186,7 @@ func (c *ctx) eclConfig(t *testing.T) {
 			exit: 0,
 		},
 		{
-			name:    "run with whitelist key1 and unsigned image",
+			name:    "run with allowlist key1 and unsigned image",
 			command: "exec",
 			profile: e2e.UserProfile,
 			config: &syecl.EclConfig{
@@ -194,7 +194,7 @@ func (c *ctx) eclConfig(t *testing.T) {
 				ExecGroups: []syecl.Execgroup{
 					{
 						TagName:  "group1",
-						ListMode: "whitelist",
+						ListMode: "allowlist",
 						DirPath:  tmpDir,
 						KeyFPs:   []string{KeyMap["key1"]},
 					},
@@ -204,7 +204,7 @@ func (c *ctx) eclConfig(t *testing.T) {
 			exit: 255,
 		},
 		{
-			name:    "run with whitelist no key and unsigned image",
+			name:    "run with allowlist no key and unsigned image",
 			command: "exec",
 			profile: e2e.UserProfile,
 			config: &syecl.EclConfig{
@@ -212,7 +212,7 @@ func (c *ctx) eclConfig(t *testing.T) {
 				ExecGroups: []syecl.Execgroup{
 					{
 						TagName:  "group1",
-						ListMode: "whitelist",
+						ListMode: "allowlist",
 						DirPath:  tmpDir,
 					},
 				},
@@ -221,7 +221,7 @@ func (c *ctx) eclConfig(t *testing.T) {
 			exit: 255,
 		},
 		{
-			name:    "run with whitelist fake directory and signed image",
+			name:    "run with allowlist fake directory and signed image",
 			command: "exec",
 			profile: e2e.UserProfile,
 			config: &syecl.EclConfig{
@@ -229,7 +229,7 @@ func (c *ctx) eclConfig(t *testing.T) {
 				ExecGroups: []syecl.Execgroup{
 					{
 						TagName:  "group1",
-						ListMode: "whitelist",
+						ListMode: "allowlist",
 						DirPath:  "/",
 						KeyFPs:   []string{KeyMap["key1"], KeyMap["key2"]},
 					},
@@ -239,7 +239,7 @@ func (c *ctx) eclConfig(t *testing.T) {
 			exit: 255,
 		},
 		{
-			name:    "run with whitestrict and signed image",
+			name:    "run with allowstrict and signed image",
 			command: "exec",
 			profile: e2e.UserProfile,
 			config: &syecl.EclConfig{
@@ -247,7 +247,7 @@ func (c *ctx) eclConfig(t *testing.T) {
 				ExecGroups: []syecl.Execgroup{
 					{
 						TagName:  "group1",
-						ListMode: "whitestrict",
+						ListMode: "allowstrict",
 						DirPath:  tmpDir,
 						KeyFPs:   []string{KeyMap["key1"], KeyMap["key2"]},
 					},
@@ -257,7 +257,7 @@ func (c *ctx) eclConfig(t *testing.T) {
 			exit: 0,
 		},
 		{
-			name:    "run with whitestrict and single signed image",
+			name:    "run with allowstrict and single signed image",
 			command: "exec",
 			profile: e2e.UserProfile,
 			config: &syecl.EclConfig{
@@ -265,7 +265,7 @@ func (c *ctx) eclConfig(t *testing.T) {
 				ExecGroups: []syecl.Execgroup{
 					{
 						TagName:  "group1",
-						ListMode: "whitestrict",
+						ListMode: "allowstrict",
 						DirPath:  tmpDir,
 						KeyFPs:   []string{KeyMap["key1"], KeyMap["key2"]},
 					},
@@ -275,7 +275,7 @@ func (c *ctx) eclConfig(t *testing.T) {
 			exit: 255,
 		},
 		{
-			name:    "run with whitestrict and unsigned image",
+			name:    "run with allowstrict and unsigned image",
 			command: "exec",
 			profile: e2e.UserProfile,
 			config: &syecl.EclConfig{
@@ -283,7 +283,7 @@ func (c *ctx) eclConfig(t *testing.T) {
 				ExecGroups: []syecl.Execgroup{
 					{
 						TagName:  "group1",
-						ListMode: "whitestrict",
+						ListMode: "allowstrict",
 						DirPath:  tmpDir,
 						KeyFPs:   []string{KeyMap["key1"], KeyMap["key2"]},
 					},
@@ -293,7 +293,7 @@ func (c *ctx) eclConfig(t *testing.T) {
 			exit: 255,
 		},
 		{
-			name:    "run with blacklist (key1) and signed image",
+			name:    "run with denylist (key1) and signed image",
 			command: "exec",
 			profile: e2e.UserProfile,
 			config: &syecl.EclConfig{
@@ -301,7 +301,7 @@ func (c *ctx) eclConfig(t *testing.T) {
 				ExecGroups: []syecl.Execgroup{
 					{
 						TagName:  "group1",
-						ListMode: "blacklist",
+						ListMode: "denylist",
 						DirPath:  tmpDir,
 						KeyFPs:   []string{KeyMap["key1"]},
 					},
@@ -311,7 +311,7 @@ func (c *ctx) eclConfig(t *testing.T) {
 			exit: 255,
 		},
 		{
-			name:    "run with blacklist (key2) and single signed image",
+			name:    "run with denylist (key2) and single signed image",
 			command: "exec",
 			profile: e2e.UserProfile,
 			config: &syecl.EclConfig{
@@ -319,7 +319,7 @@ func (c *ctx) eclConfig(t *testing.T) {
 				ExecGroups: []syecl.Execgroup{
 					{
 						TagName:  "group1",
-						ListMode: "blacklist",
+						ListMode: "denylist",
 						DirPath:  tmpDir,
 						KeyFPs:   []string{KeyMap["key2"]},
 					},

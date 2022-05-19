@@ -5,7 +5,7 @@
 # location of the sif file in the file system and by checking against a list of
 # signing entities.
 #
-# The current possible list modes are: whitelist, whitestrict and blacklist.
+# The current possible list modes are: allowlist, allowstrict and denylist.
 #
 # Example:
 #
@@ -13,13 +13,13 @@
 #
 #[[execgroup]]
 #  tagname = "group1"
-#  mode = "whitestrict"
+#  mode = "allowstrict"
 #  dirpath = "/var/cache/containers"
 #  keyfp = ["5994BE54C31CF1B5E1994F987C52CF6D055F072B","7064B1D6EFF01B1262FED3F03581D99FE87EAFD1"]
 #
 #[[execgroup]]
 #  tagname = "group2"
-#  mode = "whitelist"
+#  mode = "allowlist"
 #  dirpath = "/tmp/containers"
 #  keyfp = ["7064B1D6EFF01B1262FED3F03581D99FE87EAFD1"]
 #

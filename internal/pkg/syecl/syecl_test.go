@@ -31,19 +31,19 @@ const (
 func TestAPutConfig(t *testing.T) {
 	wl := Execgroup{
 		TagName:  "name",
-		ListMode: "whitelist",
+		ListMode: "allowlist",
 		DirPath:  "/var/data1",
 		KeyFPs:   []string{KeyFP1, KeyFP2},
 	}
 	wls := Execgroup{
 		TagName:  "name",
-		ListMode: "whitestrict",
+		ListMode: "allowstrict",
 		DirPath:  "/var/data2",
 		KeyFPs:   []string{KeyFP1, KeyFP2},
 	}
 	bl := Execgroup{
 		TagName:  "name",
-		ListMode: "blacklist",
+		ListMode: "denylist",
 		DirPath:  "/var/data3",
 		KeyFPs:   []string{KeyFP1},
 	}
@@ -69,27 +69,27 @@ func TestAPutConfig(t *testing.T) {
 			c:    EclConfig{Activated: true, Legacy: true},
 		},
 		{
-			name: "WhiteList",
+			name: "AllowList",
 			c:    EclConfig{Activated: true, ExecGroups: []Execgroup{wl}},
 		},
 		{
-			name: "WhiteListLegacy",
+			name: "AllowListLegacy",
 			c:    EclConfig{Activated: true, Legacy: true, ExecGroups: []Execgroup{wl}},
 		},
 		{
-			name: "WhiteStrict",
+			name: "AllowStrict",
 			c:    EclConfig{Activated: true, ExecGroups: []Execgroup{wls}},
 		},
 		{
-			name: "WhiteStrictLegacy",
+			name: "AllowStrictLegacy",
 			c:    EclConfig{Activated: true, Legacy: true, ExecGroups: []Execgroup{wls}},
 		},
 		{
-			name: "BlackList",
+			name: "DenyList",
 			c:    EclConfig{Activated: true, ExecGroups: []Execgroup{bl}},
 		},
 		{
-			name: "BlackListLegacy",
+			name: "DenyListLegacy",
 			c:    EclConfig{Activated: true, Legacy: true, ExecGroups: []Execgroup{bl}},
 		},
 		{
@@ -130,19 +130,19 @@ func TestAPutConfig(t *testing.T) {
 func TestLoadConfig(t *testing.T) {
 	wl := Execgroup{
 		TagName:  "name",
-		ListMode: "whitelist",
+		ListMode: "allowlist",
 		DirPath:  "/var/data1",
 		KeyFPs:   []string{KeyFP1, KeyFP2},
 	}
 	wls := Execgroup{
 		TagName:  "name",
-		ListMode: "whitestrict",
+		ListMode: "allowstrict",
 		DirPath:  "/var/data2",
 		KeyFPs:   []string{KeyFP1, KeyFP2},
 	}
 	bl := Execgroup{
 		TagName:  "name",
-		ListMode: "blacklist",
+		ListMode: "denylist",
 		DirPath:  "/var/data3",
 		KeyFPs:   []string{KeyFP1},
 	}
@@ -169,27 +169,27 @@ func TestLoadConfig(t *testing.T) {
 			wantConfig: EclConfig{Activated: true, Legacy: true},
 		},
 		{
-			name:       "WhiteList",
+			name:       "AllowList",
 			wantConfig: EclConfig{Activated: true, ExecGroups: []Execgroup{wl}},
 		},
 		{
-			name:       "WhiteListLegacy",
+			name:       "AllowListLegacy",
 			wantConfig: EclConfig{Activated: true, Legacy: true, ExecGroups: []Execgroup{wl}},
 		},
 		{
-			name:       "WhiteStrict",
+			name:       "AllowStrict",
 			wantConfig: EclConfig{Activated: true, ExecGroups: []Execgroup{wls}},
 		},
 		{
-			name:       "WhiteStrictLegacy",
+			name:       "AllowStrictLegacy",
 			wantConfig: EclConfig{Activated: true, Legacy: true, ExecGroups: []Execgroup{wls}},
 		},
 		{
-			name:       "BlackList",
+			name:       "DenyList",
 			wantConfig: EclConfig{Activated: true, ExecGroups: []Execgroup{bl}},
 		},
 		{
-			name:       "BlackListLegacy",
+			name:       "DenyListLegacy",
 			wantConfig: EclConfig{Activated: true, Legacy: true, ExecGroups: []Execgroup{bl}},
 		},
 		{
@@ -226,19 +226,19 @@ func TestValidateConfig(t *testing.T) {
 
 	wl := Execgroup{
 		TagName:  "name",
-		ListMode: "whitelist",
+		ListMode: "allowlist",
 		DirPath:  dirPath,
 		KeyFPs:   []string{KeyFP1, KeyFP2},
 	}
 	wls := Execgroup{
 		TagName:  "name",
-		ListMode: "whitestrict",
+		ListMode: "allowstrict",
 		DirPath:  dirPath,
 		KeyFPs:   []string{KeyFP1, KeyFP2},
 	}
 	bl := Execgroup{
 		TagName:  "name",
-		ListMode: "blacklist",
+		ListMode: "denylist",
 		DirPath:  dirPath,
 		KeyFPs:   []string{KeyFP1},
 	}
@@ -273,7 +273,7 @@ func TestValidateConfig(t *testing.T) {
 		{
 			name: "BadFingerprint",
 			c: EclConfig{ExecGroups: []Execgroup{
-				{ListMode: "whitelist", KeyFPs: []string{"bad"}},
+				{ListMode: "allowlist", KeyFPs: []string{"bad"}},
 			}},
 			wantErr: true,
 		},
@@ -294,27 +294,27 @@ func TestValidateConfig(t *testing.T) {
 			c:    EclConfig{Activated: true, Legacy: true},
 		},
 		{
-			name: "WhiteList",
+			name: "AllowList",
 			c:    EclConfig{Activated: true, ExecGroups: []Execgroup{wl}},
 		},
 		{
-			name: "WhiteListLegacy",
+			name: "AllowListLegacy",
 			c:    EclConfig{Activated: true, Legacy: true, ExecGroups: []Execgroup{wl}},
 		},
 		{
-			name: "WhiteStrict",
+			name: "AllowStrict",
 			c:    EclConfig{Activated: true, ExecGroups: []Execgroup{wls}},
 		},
 		{
-			name: "WhiteStrictLegacy",
+			name: "AllowStrictLegacy",
 			c:    EclConfig{Activated: true, Legacy: true, ExecGroups: []Execgroup{wls}},
 		},
 		{
-			name: "BlackList",
+			name: "DenyList",
 			c:    EclConfig{Activated: true, ExecGroups: []Execgroup{bl}},
 		},
 		{
-			name: "BlackListLegacy",
+			name: "DenyListLegacy",
 			c:    EclConfig{Activated: true, Legacy: true, ExecGroups: []Execgroup{bl}},
 		},
 	}
@@ -357,42 +357,42 @@ func TestShouldRun(t *testing.T) {
 	}
 
 	noDirPath1 := Execgroup{
-		ListMode: "whitelist",
+		ListMode: "allowlist",
 		DirPath:  "",
 		KeyFPs:   []string{KeyFP1},
 	}
 	noDirPath2 := Execgroup{
-		ListMode: "whitelist",
+		ListMode: "allowlist",
 		DirPath:  "",
 		KeyFPs:   []string{KeyFP2},
 	}
 	wl1 := Execgroup{
-		ListMode: "whitelist",
+		ListMode: "allowlist",
 		DirPath:  dirPath,
 		KeyFPs:   []string{KeyFP1},
 	}
 	wl2 := Execgroup{
-		ListMode: "whitelist",
+		ListMode: "allowlist",
 		DirPath:  dirPath,
 		KeyFPs:   []string{KeyFP2},
 	}
 	ws1 := Execgroup{
-		ListMode: "whitestrict",
+		ListMode: "allowstrict",
 		DirPath:  dirPath,
 		KeyFPs:   []string{KeyFP1},
 	}
 	ws2 := Execgroup{
-		ListMode: "whitestrict",
+		ListMode: "allowstrict",
 		DirPath:  dirPath,
 		KeyFPs:   []string{KeyFP2},
 	}
 	bl1 := Execgroup{
-		ListMode: "blacklist",
+		ListMode: "denylist",
 		DirPath:  dirPath,
 		KeyFPs:   []string{KeyFP1},
 	}
 	bl2 := Execgroup{
-		ListMode: "blacklist",
+		ListMode: "denylist",
 		DirPath:  dirPath,
 		KeyFPs:   []string{KeyFP2},
 	}
@@ -414,21 +414,21 @@ func TestShouldRun(t *testing.T) {
 		{"Deactivated", false, false, Execgroup{}, unsigned, false},
 		{"NoDirPathOK", true, false, noDirPath1, signed, false},
 		{"NoDirPathError", true, false, noDirPath2, signed, true},
-		{"WhitelistOK", true, false, wl1, signed, false},
-		{"WhitelistError", true, false, wl2, signed, true},
-		{"WhitestrictOK", true, false, ws1, signed, false},
-		{"WhitestrictError", true, false, ws2, signed, true},
-		{"BlacklistOK", true, false, bl2, signed, false},
-		{"BlacklistError", true, false, bl1, signed, true},
+		{"AllowlistOK", true, false, wl1, signed, false},
+		{"AllowlistError", true, false, wl2, signed, true},
+		{"AllowstrictOK", true, false, ws1, signed, false},
+		{"AllowstrictError", true, false, ws2, signed, true},
+		{"DenylistOK", true, false, bl2, signed, false},
+		{"DenylistError", true, false, bl1, signed, true},
 		{"LegacyDeactivated", false, true, Execgroup{}, unsigned, false},
 		{"LegacyNoDirPathOK", true, true, noDirPath1, legacySigned, false},
 		{"LegacyNoDirPathError", true, true, noDirPath2, legacySigned, true},
-		{"LegacyWhitelistOK", true, true, wl1, legacySigned, false},
-		{"LegacyWhitelistError", true, true, wl2, legacySigned, true},
-		{"LegacyWhitestrictOK", true, true, ws1, legacySigned, false},
-		{"LegacyWhitestrictError", true, true, ws2, legacySigned, true},
-		{"LegacyBlacklistOK", true, true, bl2, legacySigned, false},
-		{"LegacyBlacklistError", true, true, bl1, legacySigned, true},
+		{"LegacyAllowlistOK", true, true, wl1, legacySigned, false},
+		{"LegacyAllowlistError", true, true, wl2, legacySigned, true},
+		{"LegacyAllowstrictOK", true, true, ws1, legacySigned, false},
+		{"LegacyAllowstrictError", true, true, ws2, legacySigned, true},
+		{"LegacyDenylistOK", true, true, bl2, legacySigned, false},
+		{"LegacyDenylistError", true, true, bl1, legacySigned, true},
 	}
 
 	for _, tt := range tests {

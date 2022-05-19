@@ -43,10 +43,10 @@ type EclConfig struct {
 
 // Execgroup describes an execution group, the main unit of configuration:
 //	TagName: a descriptive identifier
-//	ListMode: whether the execgroup follows a whitelist, whitestrict or blacklist model
-//		whitelist: one or more KeyFP's present and verified,
-//		whitestrict: all KeyFP's present and verified,
-//		blacklist: none of the KeyFP should be present
+//	ListMode: whether the execgroup follows a allowlist, allowstrict or denylist model
+//		allowlist: one or more KeyFP's present and verified,
+//		allowstrict: all KeyFP's present and verified,
+//		denylist: none of the KeyFP should be present
 //	DirPath: containers must be stored in this directory path
 //	KeyFPs: list of Key Fingerprints of entities to verify
 type Execgroup struct {
@@ -105,7 +105,10 @@ func (ecl *EclConfig) ValidateConfig() error {
 			}
 		}
 		if v.ListMode != "whitelist" && v.ListMode != "whitestrict" && v.ListMode != "blacklist" {
-			return fmt.Errorf("the mode field can only be either: whitelist, whitestrict, blacklist")
+			return fmt.Errorf("legacy mode names have been deprecated. available modes are: allowlist, allowstrict, blacklist")
+		}
+		if v.ListMode != "allowlist" && v.ListMode != "allowstrict" && v.ListMode != "denylist" {
+			return fmt.Errorf("available modes are: allowlist, allowstrict, denylist")
 		}
 		for _, k := range v.KeyFPs {
 			decoded, err := hex.DecodeString(k)
@@ -118,8 +121,8 @@ func (ecl *EclConfig) ValidateConfig() error {
 	return nil
 }
 
-// checkWhiteList evaluates authorization by requiring at least 1 entity
-func checkWhiteList(v *integrity.Verifier, egroup *Execgroup) (ok bool, err error) {
+// checkAllowList evaluates authorization by requiring at least 1 entity
+func checkAllowList(v *integrity.Verifier, egroup *Execgroup) (ok bool, err error) {
 	// get signing entities fingerprints that have signed all selected objects
 	keyfps, err := v.AllSignedBy()
 	if err != nil {
@@ -142,8 +145,8 @@ func checkWhiteList(v *integrity.Verifier, egroup *Execgroup) (ok bool, err erro
 	return true, nil
 }
 
-// checkWhiteStrict evaluates authorization by requiring all entities
-func checkWhiteStrict(v *integrity.Verifier, egroup *Execgroup) (ok bool, err error) {
+// checkAllowStrict evaluates authorization by requiring all entities
+func checkAllowStrict(v *integrity.Verifier, egroup *Execgroup) (ok bool, err error) {
 	// get signing entities fingerprints that have signed all selected objects
 	keyfps, err := v.AllSignedBy()
 	if err != nil {
@@ -170,8 +173,8 @@ func checkWhiteStrict(v *integrity.Verifier, egroup *Execgroup) (ok bool, err er
 	return true, nil
 }
 
-// checkBlackList evaluates authorization by requiring all entities to be absent
-func checkBlackList(v *integrity.Verifier, egroup *Execgroup) (ok bool, err error) {
+// checkDenyList evaluates authorization by requiring all entities to be absent
+func checkDenyList(v *integrity.Verifier, egroup *Execgroup) (ok bool, err error) {
 	// get all signing entities fingerprints that have signed any selected object
 	keyfps, err := v.AnySignedBy()
 	if err != nil {
@@ -245,12 +248,12 @@ func shouldRun(ecl *EclConfig, fp *os.File, kr openpgp.KeyRing) (ok bool, err er
 
 	// Check fingerprints against policy.
 	switch egroup.ListMode {
-	case "whitelist":
-		return checkWhiteList(v, egroup)
-	case "whitestrict":
-		return checkWhiteStrict(v, egroup)
-	case "blacklist":
-		return checkBlackList(v, egroup)
+	case "allowlist":
+		return checkAllowList(v, egroup)
+	case "allowstrict":
+		return checkAllowStrict(v, egroup)
+	case "denylist":
+		return checkDenyList(v, egroup)
 	}
 
 	return false, fmt.Errorf("ecl config file invalid")
